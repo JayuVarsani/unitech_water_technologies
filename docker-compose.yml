@@ -1,0 +1,87 @@
+name: "Skf-Mas"
+
+services:
+    nginx:
+        build:
+            context: .
+            dockerfile: .docker/nginx.Dockerfile
+        container_name: mas-nginx
+        depends_on:
+            - php
+            - database
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+
+
+    php:
+        build:
+            context: .
+            dockerfile: .docker/php.Dockerfile
+        container_name: mas-php
+        volumes:
+            - .:/var/www/html
+
+
+    artisan:
+        build:
+            context: .
+            dockerfile: .docker/php.Dockerfile
+        container_name: laravel-artisan
+        volumes:
+            - .:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: [ "php", "artisan" ]
+        depends_on:
+            - database
+
+
+    composer:
+        image: composer:latest
+        container_name: mas-composer
+        volumes:
+            - .:/var/www/html
+        working_dir: /var/www/html
+
+
+    node:
+        image: node:20.11.1-alpine3.19
+        container_name: mas-node
+        volumes:
+            - .:/var/www/html
+        working_dir: /var/www/html
+        entrypoint: [ "npm" ]
+
+
+    database:
+        container_name: mas-database
+        image: mysql:8.0
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_DATABASE=mas
+            - MYSQL_USER=docker
+            - MYSQL_PASSWORD=docker
+            - MYSQL_ROOT_PASSWORD=root
+        volumes:
+            - db-data:/var/lib/mysql
+
+
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - "5050:80"
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOSTS=database
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+
+
+volumes:
+    db-data: ~
+

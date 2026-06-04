@@ -1,0 +1,6 @@
+{
+    "**/*.php": [
+        "./vendor/bin/pint",
+        "./vendor/bin/phpstan analyse app database --memory-limit=500M"
+    ]
+}
