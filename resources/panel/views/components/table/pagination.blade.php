@@ -1,7 +1,7 @@
 @props(['name'])
 <div class="table-pagination">
     <nav class="d-flex justify-items-center justify-content-between">
-        <div class="d-flex justify-content-between flex-fill d-sm-none">
+        <div class="d-flex justify-content-between flex-fill d-none">
             <ul class="pagination">
                 @if ($paginator->onFirstPage())
                     <li class="page-item disabled" aria-disabled="true">
@@ -30,7 +30,7 @@
                 @endif
             </ul>
         </div>
-        <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
+        <div class="flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
             <div class="d-flex justify-content-center align-content-center align-items-baseline">
                 <div>
                     <select class="form-select form-select-sm form-select-solid"

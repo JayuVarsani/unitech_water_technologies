@@ -36,6 +36,14 @@ use App\Src\Company\Modules\OrderJob\OrderJobTable;
 use App\Src\Company\Modules\Product\CreateProduct;
 use App\Src\Company\Modules\Product\EditProduct;
 use App\Src\Company\Modules\Product\ProductTable;
+use App\Src\Company\Modules\Delivery\CreateDelivery;
+use App\Src\Company\Modules\Delivery\DeliveryTable;
+use App\Src\Company\Modules\Delivery\EditDelivery;
+use App\Src\Company\Modules\Delivery\ViewDelivery;
+use App\Src\Company\Modules\Visit\CreateVisit;
+use App\Src\Company\Modules\Visit\EditVisit;
+use App\Src\Company\Modules\Visit\ViewVisit;
+use App\Src\Company\Modules\Visit\VisitTable;
 use App\Src\Company\Modules\Profile\ChangePassword;
 use App\Src\Company\Modules\Profile\Dashboard;
 use App\Src\Company\Modules\Profile\Logout;
@@ -90,6 +98,22 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('/', ProductTable::class)->name('index');
                 Route::get('create', CreateProduct::class)->name('create');
                 Route::get('edit/{product}', EditProduct::class)->name('edit');
+            });
+
+            // Visit
+            Route::group(['prefix' => 'visit', 'as' => 'visit.'], function () {
+                Route::get('/', VisitTable::class)->name('index');
+                Route::get('create', CreateVisit::class)->name('create');
+                Route::get('view/{visit}', ViewVisit::class)->name('view');
+                Route::get('edit/{visit}', EditVisit::class)->name('edit');
+            });
+
+            // Delivery
+            Route::group(['prefix' => 'delivery', 'as' => 'delivery.'], function () {
+                Route::get('/', DeliveryTable::class)->name('index');
+                Route::get('create', CreateDelivery::class)->name('create');
+                Route::get('view/{delivery}', ViewDelivery::class)->name('view');
+                Route::get('edit/{delivery}', EditDelivery::class)->name('edit');
             });
 
             // Material

@@ -73,6 +73,7 @@
 <script>
     Alpine.data("imageCapture", function() {
         return {
+            modelName: 'form.{{ $name }}',
             width: 0,
             height: 0,
             uploading: false,
