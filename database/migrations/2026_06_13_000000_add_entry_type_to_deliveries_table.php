@@ -10,16 +10,26 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (! Schema::hasColumn('deliveries', 'entry_type')) {
+            Schema::table('deliveries', function (Blueprint $table) {
+                $table->string('entry_type')->default('form')->after('customer_name');
+            });
+        }
+
         Schema::table('deliveries', function (Blueprint $table) {
-            $table->string('entry_type')->default('form')->after('customer_name');
             $table->text('item_details')->nullable()->change();
         });
     }
 
     public function down(): void
     {
+        if (Schema::hasColumn('deliveries', 'entry_type')) {
+            Schema::table('deliveries', function (Blueprint $table) {
+                $table->dropColumn('entry_type');
+            });
+        }
+
         Schema::table('deliveries', function (Blueprint $table) {
-            $table->dropColumn('entry_type');
             $table->text('item_details')->nullable(false)->change();
         });
     }
