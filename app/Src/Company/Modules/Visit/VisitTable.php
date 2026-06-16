@@ -7,7 +7,6 @@ namespace App\Src\Company\Modules\Visit;
 use App\Models\Visit;
 use App\Utility\livewire\BaseTable;
 use App\Utility\livewire\ExceptionTrait;
-use App\Utility\livewire\TableForm;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,7 +16,7 @@ class VisitTable extends BaseTable
 {
     use ExceptionTrait;
 
-    public TableForm $query;
+    public VisitTableForm $query;
 
     public $canView;
 
@@ -27,6 +26,8 @@ class VisitTable extends BaseTable
 
     public $canDelete;
 
+    protected array $resetQueryParams = ['query.search', 'query.perPage', 'query.startDate', 'query.endDate'];
+
     protected ?string $moduleUniqueName = 'company.visit';
 
     public function mount(): void
@@ -35,6 +36,14 @@ class VisitTable extends BaseTable
         $this->canCreate = $this->hasPermission(type: 'create');
         $this->canEdit = $this->hasPermission(type: 'edit');
         $this->canDelete = $this->hasPermission(type: 'delete');
+
+        if (empty($this->query->startDate)) {
+            $this->query->startDate = now()->startOfMonth()->format('Y-m-d');
+        }
+
+        if (empty($this->query->endDate)) {
+            $this->query->endDate = now()->endOfMonth()->format('Y-m-d');
+        }
     }
 
     public function hasPermission(string $type = 'view', bool $abort = true): bool
@@ -70,17 +79,24 @@ class VisitTable extends BaseTable
             'site_name',
             'contact_person',
             'visit_number',
+            'status',
+            'sort_order',
         ])
             ->where('company_id', Auth::user()->company_id)
+            ->when($this->query->startDate && $this->query->endDate, function (Builder $query) {
+                $query->whereBetween('visit_date', [$this->query->startDate, $this->query->endDate]);
+            })
             ->when($this->query->search, function (Builder $query) {
-                $query->where(function (Builder $query) {
-                    $search = $this->query->search;
+                $search = $this->query->search;
 
-                    return $query->whereAny(
+                $query->where(function (Builder $query) use ($search) {
+                    $query->whereAny(
                         ['site_name', 'contact_person', 'visit_number', 'representative'],
                         'like',
                         "%{$search}%"
-                    );
+                    )->orWhereHas('amc', function (Builder $query) use ($search) {
+                        $query->where('customer_name', 'like', "%{$search}%");
+                    });
                 });
             })
             ->latest('id')

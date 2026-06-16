@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Src\Company\Modules\Visit\Form;
 
+use App\Models\Staff;
 use App\Models\Visit;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Livewire\Form;
 
 class VisitForm extends Form
@@ -15,6 +17,8 @@ class VisitForm extends Form
     public $visitNumber = '';
 
     public $representative = '';
+
+    public $staffId = '';
 
     public $siteName = '';
 
@@ -76,6 +80,26 @@ class VisitForm extends Form
 
     public $id = 0;
 
+    public function completeVisit(Visit $visit): void
+    {
+        $this->validate($this->completeRules());
+        $visit->update(array_merge($this->getValues(), [
+            'status' => Visit::STATUS_COMPLETED,
+        ]));
+    }
+
+    public function completeRules(): array
+    {
+        return array_merge($this->rules(), [
+            'staffId' => [
+                'required',
+                Rule::exists('staffs', 'id')->where(
+                    fn ($query) => $query->where('company_id', Auth::user()->company_id)
+                ),
+            ],
+        ]);
+    }
+
     public function createVisit(): Visit
     {
         $this->validate();
@@ -132,6 +156,7 @@ class VisitForm extends Form
             'siteName' => 'site name',
             'contactPerson' => 'contact person',
             'clientSignature' => 'client signature',
+            'staffId' => 'representative',
         ];
     }
 
@@ -143,6 +168,7 @@ class VisitForm extends Form
             'visitDate' => $visit->visit_date?->format('Y-m-d') ?? '',
             'visitNumber' => $visit->visit_number ?? '',
             'representative' => $visit->representative ?? '',
+            'staffId' => $visit->staff_id ?? '',
             'siteName' => $visit->site_name ?? '',
             'contactAddress' => $visit->contact_address ?? '',
             'contactPerson' => $visit->contact_person ?? '',
@@ -183,11 +209,26 @@ class VisitForm extends Form
 
     protected function getValues(): array
     {
+        $representative = $this->representative ?: null;
+        $staffId = $this->staffId ?: null;
+
+        if ($staffId) {
+            $staff = Staff::where('id', $staffId)
+                ->where('company_id', Auth::user()->company_id)
+                ->first();
+
+            if ($staff) {
+                $representative = $staff->name;
+                $staffId = $staff->id;
+            }
+        }
+
         return [
             'company_id' => Auth::user()->company_id,
             'visit_date' => $this->visitDate,
             'visit_number' => $this->visitNumber ?: null,
-            'representative' => $this->representative ?: null,
+            'representative' => $representative,
+            'staff_id' => $staffId,
             'site_name' => $this->siteName,
             'contact_address' => $this->contactAddress ?: null,
             'contact_person' => $this->contactPerson,

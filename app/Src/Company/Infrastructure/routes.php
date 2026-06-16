@@ -36,11 +36,25 @@ use App\Src\Company\Modules\OrderJob\OrderJobTable;
 use App\Src\Company\Modules\Product\CreateProduct;
 use App\Src\Company\Modules\Product\EditProduct;
 use App\Src\Company\Modules\Product\ProductTable;
+use App\Src\Company\Modules\Amc\AmcTable;
+use App\Src\Company\Modules\Amc\CreateAmc;
+use App\Src\Company\Modules\Amc\EditAmc;
+use App\Src\Company\Modules\Amc\ViewAmc;
 use App\Src\Company\Modules\Delivery\CreateDelivery;
 use App\Src\Company\Modules\Delivery\DeliveryTable;
 use App\Src\Company\Modules\Delivery\EditDelivery;
 use App\Src\Company\Modules\Delivery\ViewDelivery;
-use App\Src\Company\Modules\Visit\CreateVisit;
+use App\Src\Company\Modules\Installation\CreateInstallation;
+use App\Src\Company\Modules\Installation\EditInstallation;
+use App\Src\Company\Modules\Installation\InstallationTable;
+use App\Src\Company\Modules\Installation\ViewInstallation;
+use App\Src\Company\Modules\Parameter\CreateParameter;
+use App\Src\Company\Modules\Parameter\EditParameter;
+use App\Src\Company\Modules\Parameter\ParameterTable;
+use App\Src\Company\Modules\TreatmentScheme\CreateTreatmentScheme;
+use App\Src\Company\Modules\TreatmentScheme\EditTreatmentScheme;
+use App\Src\Company\Modules\TreatmentScheme\TreatmentSchemeTable;
+use App\Src\Company\Modules\Visit\CompleteVisit;
 use App\Src\Company\Modules\Visit\EditVisit;
 use App\Src\Company\Modules\Visit\ViewVisit;
 use App\Src\Company\Modules\Visit\VisitTable;
@@ -103,7 +117,7 @@ Route::group(['middleware' => ['web']], function () {
             // Visit
             Route::group(['prefix' => 'visit', 'as' => 'visit.'], function () {
                 Route::get('/', VisitTable::class)->name('index');
-                Route::get('create', CreateVisit::class)->name('create');
+                Route::get('complete/{visit}', CompleteVisit::class)->name('complete');
                 Route::get('view/{visit}', ViewVisit::class)->name('view');
                 Route::get('edit/{visit}', EditVisit::class)->name('edit');
             });
@@ -114,6 +128,36 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('create', CreateDelivery::class)->name('create');
                 Route::get('view/{delivery}', ViewDelivery::class)->name('view');
                 Route::get('edit/{delivery}', EditDelivery::class)->name('edit');
+            });
+
+            // Parameter
+            Route::group(['prefix' => 'parameter', 'as' => 'parameter.'], function () {
+                Route::get('/', ParameterTable::class)->name('index');
+                Route::get('create', CreateParameter::class)->name('create');
+                Route::get('edit/{parameter}', EditParameter::class)->name('edit');
+            });
+
+            // Treatment Scheme
+            Route::group(['prefix' => 'treatment-scheme', 'as' => 'treatment-scheme.'], function () {
+                Route::get('/', TreatmentSchemeTable::class)->name('index');
+                Route::get('create', CreateTreatmentScheme::class)->name('create');
+                Route::get('edit/{treatmentScheme}', EditTreatmentScheme::class)->name('edit');
+            });
+
+            // Installation
+            Route::group(['prefix' => 'installation', 'as' => 'installation.'], function () {
+                Route::get('/', InstallationTable::class)->name('index');
+                Route::get('create', CreateInstallation::class)->name('create');
+                Route::get('view/{installation}', ViewInstallation::class)->name('view');
+                Route::get('edit/{installation}', EditInstallation::class)->name('edit');
+            });
+
+            // AMC
+            Route::group(['prefix' => 'amc', 'as' => 'amc.'], function () {
+                Route::get('/', AmcTable::class)->name('index');
+                Route::get('create', CreateAmc::class)->name('create');
+                Route::get('view/{amc}', ViewAmc::class)->name('view');
+                Route::get('edit/{amc}', EditAmc::class)->name('edit');
             });
 
             // Material

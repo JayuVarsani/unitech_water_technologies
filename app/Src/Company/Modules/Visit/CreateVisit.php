@@ -23,10 +23,7 @@ class CreateVisit extends Component
 
     public function mount(): void
     {
-        $this->canCreate = $this->hasPermission(type: 'create');
-        if (empty($this->form->visitDate)) {
-            $this->form->visitDate = now()->format('Y-m-d');
-        }
+        abort(404);
     }
 
     public function hasPermission(string $type = 'view', bool $abort = true): bool

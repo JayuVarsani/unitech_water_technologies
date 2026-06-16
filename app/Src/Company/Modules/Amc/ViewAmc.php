@@ -2,31 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Src\Company\Modules\Visit;
+namespace App\Src\Company\Modules\Amc;
 
-use App\Models\Visit;
+use App\Models\Amc;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class ViewVisit extends Component
+class ViewAmc extends Component
 {
-    public Visit $visit;
+    public Amc $amc;
 
     public $canView;
 
     public $canEdit;
 
-    protected ?string $moduleUniqueName = 'company.visit';
+    protected ?string $moduleUniqueName = 'company.amc';
 
-    public function mount(Visit $visit): void
+    public function mount(Amc $amc): void
     {
-        abort_if($visit->company_id !== Auth::user()->company_id, 404);
-        abort_if($visit->isPending(), 404);
+        abort_if($amc->company_id !== Auth::user()->company_id, 404);
 
-        $this->visit = $visit;
+        $this->amc = $amc->load('visitMonths');
         $this->canView = $this->hasPermission(type: 'view');
-        $this->canEdit = $this->hasPermission(type: 'edit') && $visit->isCompleted();
+        $this->canEdit = $this->hasPermission(type: 'edit');
     }
 
     public function hasPermission(string $type = 'view', bool $abort = true): bool
@@ -36,15 +35,15 @@ class ViewVisit extends Component
 
     public function render(): View
     {
-        $title = __('app.panel.view_name', ['name' => 'Visit']);
+        $title = __('app.panel.view_name', ['name' => 'AMC']);
 
         if ($this->canView) {
-            return view('company::Visit.views.view', [
+            return view('company::Amc.views.view', [
                 'title' => $title,
             ])->layout('panel::layout.app', [
                 'breadcrumb' => [
-                    ['Visits', route('company.visit.index')],
-                    [__('app.panel.view'), route('company.visit.view', $this->visit->id)],
+                    ['AMC', route('company.amc.index')],
+                    [__('app.panel.view'), route('company.amc.view', $this->amc->id)],
                 ],
                 'title' => $title,
             ]);

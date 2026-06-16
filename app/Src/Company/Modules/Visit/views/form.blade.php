@@ -23,15 +23,28 @@
                         <label class="col-form-label fw-semibold fs-6" for="visitNumber">No. of Visit</label>
                         <input type="text" id="visitNumber" wire:model.blur="form.visitNumber"
                                class="form-control form-control-lg form-control-solid"
-                               placeholder="Visit number">
+                               placeholder="Visit number"
+                               @if(!empty($completeMode)) readonly @endif>
                         <x-panel::error name="form.visitNumber"/>
                     </div>
                     <div class="col-md-6">
-                        <label class="col-form-label fw-semibold fs-6" for="representative">Representative / Branch</label>
-                        <input type="text" id="representative" wire:model.blur="form.representative"
-                               class="form-control form-control-lg form-control-solid"
-                               placeholder="Unitech representative or branch">
-                        <x-panel::error name="form.representative"/>
+                        <label class="col-form-label fw-semibold fs-6 required" for="representative">Representative / Branch</label>
+                        @if(!empty($completeMode))
+                            <div wire:ignore class="col-lg-12 fv-row">
+                                <select class="form-select form-select-lg add-select2-staff" id="staffId" wire:model.defer="form.staffId">
+                                    <option value="">Select staff</option>
+                                    @foreach($staffs as $staff)
+                                        <option value="{{ $staff->id }}" @selected((string) $form->staffId === (string) $staff->id)>{{ $staff->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <x-panel::error name="form.staffId"/>
+                        @else
+                            <input type="text" id="representative" wire:model.blur="form.representative"
+                                   class="form-control form-control-lg form-control-solid"
+                                   placeholder="Unitech representative or branch">
+                            <x-panel::error name="form.representative"/>
+                        @endif
                     </div>
                 </div>
 
@@ -40,7 +53,8 @@
                         <label class="col-form-label fw-semibold fs-6" for="siteName">Name of Site</label>
                         <input type="text" id="siteName" wire:model.blur="form.siteName"
                                class="form-control form-control-lg form-control-solid"
-                               placeholder="Site name">
+                               placeholder="Site name"
+                               @if(!empty($completeMode)) readonly @endif>
                         <x-panel::error name="form.siteName"/>
                     </div>
                     <div class="col-md-6">
@@ -301,13 +315,24 @@
             <div class="card-footer d-flex justify-content-end py-6 px-9">
                 <a href="{{ route('company.visit.index') }}"
                    class="btn btn-light btn-active-light-primary me-2">{{ __('app.panel.cancel') }}</a>
-                <button type="submit" class="btn btn-primary">{{ __('app.panel.submit') }}</button>
+                <button type="submit" class="btn btn-primary">{{ !empty($completeMode) ? 'Complete Visit' : __('app.panel.submit') }}</button>
             </div>
         </form>
     </div>
 </div>
 @script
 <script>
+    @if(!empty($completeMode))
+    $(document).ready(function () {
+        $('.add-select2-staff').select2();
+        $('.add-select2-staff option:first-child').prop('disabled', true);
+
+        $('#staffId').on('change', function () {
+            @this.set('form.staffId', $(this).val());
+        });
+    });
+    @endif
+
     (function () {
         const canvas = document.getElementById('clientSignatureCanvas');
         if (!canvas) return;
