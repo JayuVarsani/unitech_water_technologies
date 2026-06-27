@@ -64,6 +64,7 @@ return [
         'city' => 'City',
         'state' => 'State',
         'pincode' => 'Pincode',
+        'area' => 'Area',
         'customer_group' => 'Customer Group',
         'customer_reg_type' => 'Customer Register Type',
         'auto_reminder' => 'Auto Reminder',

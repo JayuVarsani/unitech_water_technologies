@@ -131,6 +131,22 @@
                 </div>
                 <div class="row mb-6">
                     <div class="col-md-3">
+                        <div class="row">
+                            <label class="col-lg-12 col-form-label fw-semibold fs-6 "
+                                for="area">{{ __('company.input.area') }}</label>
+                            <div class="col-lg-12 fv-row">
+                                <input type="text" id="area" maxlength="30" name="area"
+                                    onblur="this.value = this.value.trim()"
+                                    wire:model.blur="form.area"
+                                    class="form-control form-control-lg form-control-solid"
+                                    placeholder="{{ __('company.placeholder.enter', ['name' => __('company.input.area')]) }}">
+                            </div>
+                            <x-panel::error name="form.area" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-6">
+                    <div class="col-md-3">
                         <label class="col-lg-12 col-form-label fw-semibold fs-6 required"
                             for="name">{{ __('company.input.customer_group') }}
                             <a href='#' wire:click.prevent="storeToSession"

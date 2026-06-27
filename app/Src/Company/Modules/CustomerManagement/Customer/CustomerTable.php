@@ -57,6 +57,13 @@ class CustomerTable extends BaseTable
                 ->where('company_id', $companyId)
                 ->orderBy('name')
                 ->get(['id', 'name']),
+            'customerAreas' => Customer::query()
+                ->where('company_id', $companyId)
+                ->whereNotNull('area')
+                ->where('area', '!=', '')
+                ->distinct()
+                ->orderBy('area')
+                ->pluck('area'),
         ])->layout('panel::layout.app', ['title' => str()->plural(__('company.customer-management.customers'))]);
     }
 
@@ -73,14 +80,18 @@ class CustomerTable extends BaseTable
             'id',
             'contact_number',
             'customer_group_name',
+            'area',
         ])
             ->where('company_id', Auth::user()->company_id)
             ->when($this->query->customerGroupId, function (Builder $query) {
                 return $query->where('customer_group_id', (int) $this->query->customerGroupId);
             })
+            ->when($this->query->area, function (Builder $query) {
+                return $query->where('area', $this->query->area);
+            })
             ->when($this->query->search, function (Builder $query) {
                 return $query->where(function (Builder $query) {
-                    return $query->whereAny(['name', 'id', 'contact_number', 'customer_group_name'], 'like', "%{$this->query->search}%");
+                    return $query->whereAny(['name', 'id', 'contact_number', 'customer_group_name', 'area'], 'like', "%{$this->query->search}%");
                 });
             })->latest('id')->paginate($this->query->perPage);
     }

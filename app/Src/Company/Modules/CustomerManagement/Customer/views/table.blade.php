@@ -41,6 +41,17 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="mb-10 col-md-12">
+                                    <label class="form-label fw-semibold">{{ __('company.input.area') }}:</label>
+                                    <div>
+                                        <select class="form-select form-select-solid" x-model="area">
+                                            <option value="">{{ __('company.placeholder.select', ['name' => __('company.input.area')]) }}</option>
+                                            @foreach ($customerAreas as $customerArea)
+                                                <option value="{{ $customerArea }}">{{ $customerArea }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="d-flex justify-content-end">
                                         <button type="button" x-on:click="handleReset"
@@ -72,6 +83,7 @@
                     <x-panel::table.head>
                         <th class="min-w-125px text-start text-black">{{ __('company.input.name') }}</th>
                         <th class="min-w-125px text-start text-black">{{ __('company.input.contact_number') }}</th>
+                        <th class="min-w-125px text-start text-black">{{ __('company.input.area') }}</th>
                         <th class="min-w-125px text-start text-black">{{ __('company.input.customer_group') }}</th>
                         @if ($canEdit || $canDelete)
                             <th class="min-w-125px text-black">{{ __('company.action') }}</th>
@@ -82,6 +94,7 @@
                             <tr wire:key="{{ $item->id }}">
                                 <td class="text-start">{{ $item->name }}</td>
                                 <td class="text-start">{{ $item->contact_number }}</td>
+                                <td class="text-start">{{ $item->area ?: '-' }}</td>
                                 <td class="text-start">{{ $item->customer_group_name }}</td>
                                 @if ($canEdit || $canDelete)
                                     <td>
@@ -124,8 +137,10 @@
         Alpine.data('table', function() {
             return {
                 customerGroupId: "",
+                area: "",
                 initInputs() {
                     this.customerGroupId = this.$wire.query.customerGroupId;
+                    this.area = this.$wire.query.area;
                 },
 
                 init() {
@@ -133,11 +148,13 @@
                 },
                 handleReset() {
                     this.$wire.query.customerGroupId = "";
+                    this.$wire.query.area = "";
                     this.init();
                     this.$wire.$refresh();
                 },
                 handleFilter() {
                     this.$wire.query.customerGroupId = this.customerGroupId;
+                    this.$wire.query.area = this.area;
                     this.$wire.$refresh();
                 },
                 showAlert(id) {

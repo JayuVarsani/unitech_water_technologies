@@ -11,4 +11,7 @@ class CustomerGroupTableQueryForm extends TableForm
 {
     #[Url('customer-group')]
     public string $customerGroupId = '';
+
+    #[Url('area')]
+    public string $area = '';
 }

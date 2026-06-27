@@ -41,6 +41,9 @@ class CustomerForm extends Form
     public $pincode;
 
     #[Validate]
+    public $area;
+
+    #[Validate]
     public $customerGroup;
 
     // #[Validate]
@@ -100,6 +103,7 @@ class CustomerForm extends Form
             'city' => ['nullable', 'max:30'],
             'state' => ['nullable', 'max:30'],
             'pincode' => ['nullable', 'numeric'],
+            'area' => ['nullable', 'max:30'],
             'customerGroup' => ['required'],
             // 'customerRegisterType' => ['required'],
             'openingBalance' => ['required', 'numeric', 'min:0', 'max:999999'],
@@ -131,6 +135,7 @@ class CustomerForm extends Form
             'city' => $customer->city,
             'state' => $customer->state,
             'pincode' => $customer->pincode,
+            'area' => $customer->area,
             'customerGroup' => $customer->customer_group_id,
             // 'customerRegisterType' => $customer->customer_register_type,
             'gstNo' => $customer->gst_no,
@@ -161,6 +166,7 @@ class CustomerForm extends Form
             'city' => ucfirst(trim((string) ($this->city ?? ''))),
             'state' => ucfirst(trim((string) ($this->state ?? ''))),
             'pincode' => $this->pincode,
+            'area' => ucfirst(trim((string) ($this->area ?? ''))),
             'customer_group_id' => $this->customerGroup,
             'customer_group_name' => $customerGroup->name,
             // 'customer_register_type' => ucfirst($this->customerRegisterType),

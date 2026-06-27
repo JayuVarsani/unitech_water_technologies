@@ -138,7 +138,8 @@
                                 </div>
                                 <span class="text-gray-900 fw-semibold fs-6">{{ $this->customer->state ?: '-' }}</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between py-3">
+                            <div
+                                class="d-flex align-items-center justify-content-between py-3 border-bottom border-gray-200">
                                 <div class="d-flex align-items-center gap-3">
                                     <span
                                         class="w-35px h-35px rounded-circle bg-light d-flex align-items-center justify-content-center">
@@ -148,6 +149,16 @@
                                 </div>
                                 <span
                                     class="text-gray-900 fw-semibold fs-6">{{ $this->customer->pincode ?: '-' }}</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span
+                                        class="w-35px h-35px rounded-circle bg-light d-flex align-items-center justify-content-center">
+                                        <i class="ki-outline ki-map fs-4 text-gray-700"></i>
+                                    </span>
+                                    <span class="text-muted fw-semibold fs-7">{{ __('company.input.area') }}</span>
+                                </div>
+                                <span class="text-gray-900 fw-semibold fs-6">{{ $this->customer->area ?: '-' }}</span>
                             </div>
                         </div>
                     </div>
