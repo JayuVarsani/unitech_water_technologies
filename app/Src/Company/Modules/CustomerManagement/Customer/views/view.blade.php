@@ -5,7 +5,7 @@
 
         <div class="card-header border-0">
             <div class="card-title m-0 d-flex align-items-center gap-8 border-bottom border-gray-200">
-                <h4 class="m-0 fw-bold fs-5 text-gray-900">{{ __('Customer Details') }}</h4>
+                <h4 class="m-0 fw-bold fs-5 text-gray-900">Company Details</h4>
             </div>
         </div>
         <div class="card-body border-top p-6">

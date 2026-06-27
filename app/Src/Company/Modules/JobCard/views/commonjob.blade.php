@@ -46,10 +46,10 @@
                                     </div>
                                 </div>
                                 <div class="mb-10 col-md-6">
-                                    <label class="form-label fw-semibold">Customer:</label>
+                                    <label class="form-label fw-semibold">Company:</label>
                                     <div>
                                         <select class="form-select form-select-solid" x-model="customer_id_filter">
-                                            <option value="">Select Customer</option>
+                                            <option value="">Select Company</option>
                                             @foreach ($customer as $singlecustomer)
                                                 <option value="{{ $singlecustomer->id }}">{{ $singlecustomer->name }}
                                                 </option>

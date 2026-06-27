@@ -31,10 +31,10 @@
                             <div class="separator border-gray-200"></div>
                             <div class="px-7 py-5 row">
                                 <div class="mb-10 col-md-12">
-                                    <label class="form-label fw-semibold">Customer Group:</label>
+                                    <label class="form-label fw-semibold">Company Group:</label>
                                     <div>
                                         <select class="form-select form-select-solid" x-model="customerGroupId">
-                                            <option value="">Select Customer Group</option>
+                                            <option value="">Select Company Group</option>
                                             @foreach ($customerGroups as $group)
                                                 <option value="{{ $group->id }}">{{ $group->name }}</option>
                                             @endforeach

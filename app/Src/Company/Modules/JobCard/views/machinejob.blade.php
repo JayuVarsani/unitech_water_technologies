@@ -100,7 +100,7 @@
                                     </div>
                                     <hr class="w-25 mt-1">
                                     <div class="px-4">
-                                        <h5 class="card-title">Customer: <span x-text="selectedJobDetails.customer?.name"></span></h5>
+                                        <h5 class="card-title">Company: <span x-text="selectedJobDetails.customer?.name"></span></h5>
                                         <h5 class="card-title">Qty: <span x-text="selectedJobDetails.qty"></span></h5>
                                         <h5 class="card-title">Sq.ft: <span x-text="selectedJobDetails.sq_ft"></span></h5>
                                     </div>
@@ -150,7 +150,7 @@
                         <hr class="mt-1 mb-2 w-25">
 
                         <div class="mb-2">
-                            <h5 class="card-title mb-1">Customer: 
+                            <h5 class="card-title mb-1">Company: 
                                 <span x-text="selectedJobDetails.customer?.name"></span>
                             </h5>
                             <h5 class="card-title mb-1">Qty: 

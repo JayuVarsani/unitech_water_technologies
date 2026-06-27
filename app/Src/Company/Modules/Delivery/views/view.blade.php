@@ -19,7 +19,7 @@
                     <div class="fw-bold fs-6">{{ $delivery->delivery_date?->format('d-m-Y') ?? '-' }}</div>
                 </div>
                 <div class="col-md-8 mb-4">
-                    <div class="text-muted fs-7 fw-semibold mb-1">Customer</div>
+                    <div class="text-muted fs-7 fw-semibold mb-1">Company</div>
                     <div class="fw-bold fs-6">{{ $delivery->customer_name ?: '-' }}</div>
                 </div>
             </div>
@@ -55,11 +55,11 @@
                     </div>
                 </div>
 
-                <h4 class="fw-bold mb-5">Customer Signature</h4>
+                <h4 class="fw-bold mb-5">Company Signature</h4>
                 <div class="row mb-6">
                     <div class="col-md-6 mb-4">
                         @if($delivery->customer_signature)
-                            <img src="{{ $delivery->customer_signature }}" alt="Customer signature"
+                            <img src="{{ $delivery->customer_signature }}" alt="Company signature"
                                  class="border rounded bg-white w-100" style="max-height: 180px; object-fit: contain;">
                         @else
                             <div class="fw-bold fs-6">-</div>

@@ -94,7 +94,7 @@
                                     </div>
                                     <hr class="w-25 mt-1">
                                     <div class="px-4">
-                                        <h5 class="card-title">Customer: <span x-text="selectedJobDetails.customer?.name"></span></h5>
+                                        <h5 class="card-title">Company: <span x-text="selectedJobDetails.customer?.name"></span></h5>
                                         <h5 class="card-title">Qty: <span x-text="selectedJobDetails.qty"></span></h5>
                                         <h5 class="card-title">Sq.ft: <span x-text="selectedJobDetails.sq_ft"></span></h5>
                                     </div>

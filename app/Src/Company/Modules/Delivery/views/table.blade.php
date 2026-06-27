@@ -29,7 +29,7 @@
                 <x-panel::table.main :items="$items">
                     <x-panel::table.head>
                         <th class="text-start text-black">Date</th>
-                        <th class="text-start text-black">Customer</th>
+                        <th class="text-start text-black">Company</th>
                         <th class="text-start text-black">Final Amount</th>
                         <th class="text-start text-black">Entry Type</th>
                         <th class="text-start text-black">Image</th>

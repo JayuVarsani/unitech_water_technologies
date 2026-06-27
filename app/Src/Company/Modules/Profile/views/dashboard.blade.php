@@ -62,14 +62,14 @@
                         <div class="card dashboard-stat-card dashboard-stat-card--success h-100">
                             <div class="card-body d-flex flex-column justify-content-between p-6 p-xl-8">
                                 <div class="d-flex align-items-start justify-content-between gap-3">
-                                    <span class="dashboard-stat-label">Customers</span>
+                                    <span class="dashboard-stat-label">Companies</span>
                                     <span class="dashboard-stat-icon dashboard-stat-icon--success">
                                         <i class="fa-solid fa-users"></i>
                                     </span>
                                 </div>
                                 <div class="mt-6">
                                     <div class="dashboard-stat-value">{{ number_format($customerCount) }}</div>
-                                    <div class="dashboard-stat-meta">Active customer records</div>
+                                    <div class="dashboard-stat-meta">Active company records</div>
                                 </div>
                             </div>
                         </div>
@@ -104,14 +104,14 @@
                         <div class="card dashboard-stat-card dashboard-stat-card--warning h-100">
                             <div class="card-body d-flex flex-column justify-content-between p-6 p-xl-8">
                                 <div class="d-flex align-items-start justify-content-between gap-3">
-                                    <span class="dashboard-stat-label">Customer Groups</span>
+                                    <span class="dashboard-stat-label">Company Groups</span>
                                     <span class="dashboard-stat-icon dashboard-stat-icon--warning">
                                         <i class="fa-solid fa-people-group"></i>
                                     </span>
                                 </div>
                                 <div class="mt-6">
                                     <div class="dashboard-stat-value">{{ number_format($customergroupCount) }}</div>
-                                    <div class="dashboard-stat-meta">Grouped customer accounts</div>
+                                    <div class="dashboard-stat-meta">Grouped company accounts</div>
                                 </div>
                             </div>
                         </div>
