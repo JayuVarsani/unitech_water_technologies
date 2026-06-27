@@ -13,6 +13,10 @@
                     <div class="text-muted fs-7 fw-semibold mb-1">Installation Date</div>
                     <div class="fw-bold fs-6">{{ $installation->installation_date?->format('d-m-Y') ?? '-' }}</div>
                 </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-muted fs-7 fw-semibold mb-1">Engineer Name</div>
+                    <div class="fw-bold fs-6">{{ $installation->engineer_name ?: '-' }}</div>
+                </div>
             </div>
 
             <h4 class="fw-bold mb-5">Parameters</h4>

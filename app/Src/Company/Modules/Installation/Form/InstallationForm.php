@@ -15,6 +15,8 @@ class InstallationForm extends Form
 {
     public $installationDate = '';
 
+    public $engineerName = '';
+
     public $clientSignature = '';
 
     public array $parameterValues = [];
@@ -39,6 +41,7 @@ class InstallationForm extends Form
     {
         return [
             'installationDate' => ['required', 'date'],
+            'engineerName' => ['required', 'string', 'max:100'],
             'clientSignature' => ['required', 'string'],
             'parameterValues.*' => ['nullable', 'numeric'],
             'schemeDetails.*.make' => ['nullable', 'string', 'max:100'],
@@ -50,6 +53,7 @@ class InstallationForm extends Form
     {
         return [
             'installationDate' => 'installation date',
+            'engineerName' => 'engineer name',
             'clientSignature' => 'signature',
         ];
     }
@@ -60,6 +64,7 @@ class InstallationForm extends Form
 
         $this->fill([
             'installationDate' => $installation->installation_date?->format('Y-m-d') ?? '',
+            'engineerName' => $installation->engineer_name ?? '',
             'clientSignature' => $installation->client_signature ?? '',
         ]);
 
@@ -92,6 +97,7 @@ class InstallationForm extends Form
         return [
             'company_id' => Auth::user()->company_id,
             'installation_date' => $this->installationDate,
+            'engineer_name' => trim((string) $this->engineerName),
             'client_signature' => $this->clientSignature,
         ];
     }

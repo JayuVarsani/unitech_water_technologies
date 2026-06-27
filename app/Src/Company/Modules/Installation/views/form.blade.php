@@ -13,6 +13,14 @@
                                class="form-control form-control-lg form-control-solid">
                         <x-panel::error name="form.installationDate"/>
                     </div>
+                    <div class="col-md-4">
+                        <label class="col-form-label fw-semibold fs-6 required" for="engineerName">Engineer Name</label>
+                        <input type="text" id="engineerName" maxlength="100" wire:model.blur="form.engineerName"
+                               onblur="this.value = this.value.trim()"
+                               class="form-control form-control-lg form-control-solid"
+                               placeholder="Please Enter Engineer Name">
+                        <x-panel::error name="form.engineerName"/>
+                    </div>
                 </div>
 
                 <h4 class="fw-bold mb-5">Parameters</h4>
